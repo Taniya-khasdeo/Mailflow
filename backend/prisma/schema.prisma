@@ -1,0 +1,18 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Email {
+  id          Int      @id @default(autoincrement())
+  toEmail     String
+  subject     String
+  body        String
+  scheduledAt DateTime
+  status      String   @default("scheduled")
+  createdAt   DateTime @default(now())
+}
