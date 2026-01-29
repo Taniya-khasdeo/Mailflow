@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:4000/api/emails";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/emails`;
 
 export async function scheduleEmail(data: {
   toEmail: string;
@@ -31,7 +31,6 @@ export async function getScheduledEmails() {
   return res.json();
 }
 
-/* ✅ NEW: Sent emails API */
 export async function getSentEmails() {
   const res = await fetch(`${API_URL}/sent`);
 

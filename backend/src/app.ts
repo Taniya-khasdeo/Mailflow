@@ -4,11 +4,26 @@ import emailRoutes from "./routes/email.routes";
 
 const app = express();
 
-app.use(cors());
+/* ✅ CORS: allow frontend (local + Vercel) */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local Vite frontend
+      "https://mailflow-liart-five.vercel.app", // deployed frontend
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
+/* ✅ Routes */
 app.use("/api/emails", emailRoutes);
 
-app.listen(4000, () => {
-  console.log("Server running on http://localhost:4000");
+/* ✅ Railway requires process.env.PORT */
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
