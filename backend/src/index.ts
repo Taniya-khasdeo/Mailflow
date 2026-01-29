@@ -4,13 +4,10 @@ import emailRoutes from "./routes/email.routes";
 
 const app = express();
 
-/* ✅ Allow frontend (local + Vercel) */
+/* ✅ Use FRONTEND_URL instead of localhost */
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // local frontend
-      "https://mailflow-liart-five.vercel.app", // deployed frontend
-    ],
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -18,10 +15,14 @@ app.use(
 
 app.use(express.json());
 
-/* ✅ Email routes */
+/* ✅ Health check (prevents Railway 502) */
+app.get("/", (_req, res) => {
+  res.status(200).send("Mailflow backend is live 🚀");
+});
+
 app.use("/api/emails", emailRoutes);
 
-/* ✅ Required for Railway */
+/* ✅ Railway-compatible port */
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
