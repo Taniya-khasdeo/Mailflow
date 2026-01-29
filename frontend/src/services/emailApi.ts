@@ -1,4 +1,5 @@
-const API_URL = `${import.meta.env.VITE_API_URL}/api/emails`;
+const API_URL = "https://mailflow-production-1376.up.railway.app/api/emails";
+
 
 export async function scheduleEmail(data: {
   toEmail: string;
